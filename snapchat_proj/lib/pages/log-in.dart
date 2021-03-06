@@ -16,18 +16,18 @@ class _LogINState extends State<LogIN> {
   bool _isValidForPassword = false;
   bool _isValid = false;
 
-void _toggle1() {
+  void _toggle1() {
     setState(() {
-      _isValidForUsername = (widget._controller1.text.isEmpty) ?  false:true ;
-       _isValid = (_isValidForPassword&&_isValidForUsername) ? true : false;
-      print(_isValidForUsername);
+      _isValidForUsername = (widget._controller1.text.isEmpty) ? false : true;
+      _isValid = (_isValidForPassword && _isValidForUsername);
     });
   }
+
   void _toggle2() {
     setState(() {
-      _isValidForPassword = (widget._controller2.text.isEmpty) ?   false: true;
-       _isValid = (_isValidForPassword&&_isValidForUsername) ? true : false;
-         print(_isValidForPassword);
+      _isValidForPassword = (widget._controller2.text.isEmpty) ? false : true;
+      _isValid = (_isValidForPassword && _isValidForUsername) ? true : false;
+      print(_isValidForPassword);
     });
   }
 
@@ -56,11 +56,11 @@ void _toggle1() {
                   ),
                   CustomTextField(
                     labelName: 'password',
+                    hideInputedText: true,
                     onTextFieldChange: () => {_toggle2()},
                     customTextFieldController: widget._controller2,
                     icon: Icon(Icons.visibility_off_outlined),
                   ),
-                  
                   Center(
                     child: Container(
                       padding: const EdgeInsets.only(top: 20),

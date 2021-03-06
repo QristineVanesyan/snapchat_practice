@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final String labelName;
   final Icon icon;
+  bool hideInputedText;
   final Function onTextFieldChange;
   TextEditingController customTextFieldController;
 
@@ -10,6 +11,7 @@ class CustomTextField extends StatefulWidget {
       {Key key,
       this.labelName,
       this.icon,
+      this.hideInputedText = false,
       this.onTextFieldChange,
       this.customTextFieldController})
       : super(key: key);
@@ -18,9 +20,7 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _State extends State<CustomTextField> {
-  bool _isHidden = true;
-  bool _hideInputedText = false;
-  //bool isValid = false;
+  bool _isVisible = true;
   bool isEmpty = false;
 
   @override
@@ -28,7 +28,7 @@ class _State extends State<CustomTextField> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
-        obscureText: _hideInputedText,
+        obscureText: (widget.hideInputedText) ? _isVisible : false,
         controller: widget.customTextFieldController,
         decoration: InputDecoration(
           labelText: widget.labelName.toUpperCase(),
@@ -36,16 +36,14 @@ class _State extends State<CustomTextField> {
               fontSize: 11, letterSpacing: 1, fontWeight: FontWeight.w500),
           suffixIcon: widget.icon != null
               ? GestureDetector(
-                  child: (_isHidden == false)
-                      ? widget.icon
-                      : Icon(Icons.visibility_outlined),
+                  child: (_isVisible == false)
+                      ? Icon(Icons.visibility_outlined)
+                      : widget.icon,
                   onTap: _togglePasswordView,
                 )
               : null,
         ),
-        onChanged: 
-        (text) =>widget.onTextFieldChange(),
-        
+        onChanged: (text) => widget.onTextFieldChange(),
       ),
     );
   }
@@ -58,8 +56,8 @@ class _State extends State<CustomTextField> {
 
   void _togglePasswordView() {
     setState(() {
-      _isHidden = !_isHidden;
-      _hideInputedText = !_hideInputedText;
+      _isVisible = !_isVisible;
+      // _hideInputedText = !_hideInputedText;
     });
   }
 }
