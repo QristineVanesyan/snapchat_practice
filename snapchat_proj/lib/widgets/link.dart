@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapchat_proj/pages/forgotPassword.dart';
 
 class Link extends StatelessWidget {
   final String title;
@@ -13,7 +14,8 @@ class Link extends StatelessWidget {
               fontWeight: FontWeight.w500,
             )),
         onTap: () {
-          print("YooHoo");
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
         });
   }
 }

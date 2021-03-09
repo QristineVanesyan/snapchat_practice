@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final String labelName;
   final Icon icon;
-  bool hideInputedText;
   final Function onTextFieldChange;
+  final Function onTextFieldTap;
+  final Function validator;
+  final TextInputType txtType;
+  bool hideInputedText;
+
   TextEditingController customTextFieldController;
 
   CustomTextField(
@@ -13,6 +17,9 @@ class CustomTextField extends StatefulWidget {
       this.icon,
       this.hideInputedText = false,
       this.onTextFieldChange,
+      this.onTextFieldTap,
+      this.validator,
+      this.txtType,
       this.customTextFieldController})
       : super(key: key);
   @override
@@ -27,7 +34,9 @@ class _State extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: TextField(
+      child: TextFormField(
+        validator: widget.validator,
+        keyboardType: widget.txtType,
         obscureText: (widget.hideInputedText) ? _isVisible : false,
         controller: widget.customTextFieldController,
         decoration: InputDecoration(
@@ -44,6 +53,7 @@ class _State extends State<CustomTextField> {
               : null,
         ),
         onChanged: (text) => widget.onTextFieldChange(),
+        onTap: () => widget.onTextFieldTap(),
       ),
     );
   }
@@ -57,7 +67,6 @@ class _State extends State<CustomTextField> {
   void _togglePasswordView() {
     setState(() {
       _isVisible = !_isVisible;
-      // _hideInputedText = !_hideInputedText;
     });
   }
 }

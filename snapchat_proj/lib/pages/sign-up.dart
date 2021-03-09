@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:snapchat_proj/pages/birthday.dart';
 import 'package:snapchat_proj/widgets/customTextField.dart';
-import 'package:snapchat_proj/widgets/link.dart';
 import 'package:snapchat_proj/widgets/roundedButton.dart';
 
 // you can create one page For Sign up and login and call it with other params
@@ -14,29 +14,26 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool _isValidForUsername = false;
-  bool _isValidForPassword = false;
   bool _isValid = false;
-
-  void _toggle1() {
-    setState(() {
-      _isValidForUsername = (widget._controller1.text.isEmpty) ? false : true;
-      _isValid = (_isValidForPassword && _isValidForUsername);
-    });
-  }
-
-  void _toggle2() {
-    setState(() {
-      _isValidForPassword = (widget._controller2.text.isEmpty) ? false : true;
-      _isValid = (_isValidForPassword && _isValidForUsername) ? true : false;
-      print(_isValidForPassword);
-    });
-  }
+  final _formKey = GlobalKey<FormState>();
+  String error = "";
+  String username = "";
+  String password = "";
+  String email = "";
+  // void _toggle() {
+  //   setState(() {
+  //     _isValid = (widget._controller1.text.isNotEmpty ||
+  //         widget._controller2.text.isNotEmpty);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.blue,
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -48,18 +45,37 @@ class _SignUpState extends State<SignUp> {
               Column(
                 children: [
                   Text(
-                    'Log In',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    'What\'s your name?',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                   ),
-                  CustomTextField(
-                    labelName: 'first name'.toUpperCase(),
-                    onTextFieldChange: () => {_toggle1()},
-                    customTextFieldController: widget._controller1,
-                  ),
-                  CustomTextField(
-                    labelName: 'last name'.toUpperCase(),
-                    onTextFieldChange: () => {_toggle2()},
-                    customTextFieldController: widget._controller2,
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          labelName: 'first name'.toUpperCase(),
+                          customTextFieldController: widget._controller1,
+                          validator: (val) => val.length > 2
+                              ? "Minimum 2 characters are needed"
+                              : null,
+                          onTextFieldChange: (val) {
+                            setState(() {
+                              _isValid = (widget._controller1.text.isNotEmpty ||
+                                  widget._controller2.text.isNotEmpty);
+                              return username = val;
+                            });
+                          },
+                        ),
+                        CustomTextField(
+                          labelName: 'last name'.toUpperCase(),
+                          onTextFieldChange: () => {
+                            _isValid = (widget._controller1.text.isNotEmpty ||
+                                widget._controller2.text.isNotEmpty)
+                          },
+                          customTextFieldController: widget._controller2,
+                        ),
+                      ],
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(50, 10, 50, 0),
@@ -83,10 +99,8 @@ class _SignUpState extends State<SignUp> {
                                     // open desired screen
                                   }),
                             TextSpan(
-                                text: ' and agree to the ',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                )),
+                              text: ' and agree to the ',
+                            ),
                             TextSpan(
                                 text: 'Tearms of Service',
                                 style: TextStyle(
@@ -97,13 +111,9 @@ class _SignUpState extends State<SignUp> {
                                     // open desired screen
                                   }),
                             TextSpan(
-                                //ask for one point i neet create new TextSpan????????????
-                                text: '.',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  // fontSize: fontSizeForMessage,
-                                  // fontWeight: FontWeight.bold
-                                ))
+                              //ASK for one point i neet create new TextSpan????????????
+                              text: '.',
+                            )
                           ],
                         ),
                       ),
@@ -115,6 +125,10 @@ class _SignUpState extends State<SignUp> {
                 padding: const EdgeInsets.only(bottom: 15),
                 child: RoundedButton(
                   title: 'Sing Up & Accept',
+                  onButtonClick: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Birthday()))
+                  },
                   color: (_isValid)
                       ? const Color(0xFF02a9f4)
                       : const Color(0xFFbcbcbc),

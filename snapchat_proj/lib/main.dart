@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:snapchat_proj/pages/log-in.dart';
-
 import 'package:snapchat_proj/pages/sign-up.dart';
 import 'package:snapchat_proj/widgets/button.dart';
 
@@ -30,32 +29,39 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        //or height: double.infinity
-        child: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.yellow,
-            image: const DecorationImage(
-              image: AssetImage('assets/images/bg-img.jpg'),
-              fit: BoxFit.cover,
+      body: Container(
+        height: double.infinity,
+        color: Color(0xFFFFFC00),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 120),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 120,
+                height: 120,
+              ),
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Button(
-                title: 'log in',
-                color: const Color(0xFFd83c3c),
-                toPage: () => LogIN(),
-              ),
-              Button(
-                title: 'sign up',
-                color: const Color(0xFF03a9f4),
-                toPage: () => SignUp(),
-              ),
-            ],
-          ),
+            Column(
+              children: [
+                Button(
+                  title: 'log in',
+                  color: const Color(0xFFd83c3c),
+                  onTapToButton: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LogIN()));
+                  },
+                ),
+                Button(
+                  title: 'sign up',
+                  color: const Color(0xFF03a9f4),
+                  onTapToButton: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignUp())),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );

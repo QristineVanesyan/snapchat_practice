@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 class RoundedButton extends StatelessWidget {
   final String title;
   final Color color;
+  final Function onButtonClick;
+
   bool isActive = false;
-  RoundedButton({this.title, this.isActive, this.color});
+  RoundedButton({this.title, this.isActive, this.color, this.onButtonClick});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: null,
+      onTap: () => {onButtonClick()},
       child: Container(
           alignment: Alignment.center, //centered vertically child
           height: 40,

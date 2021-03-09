@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:snapchat_proj/pages/password.dart';
 import 'package:snapchat_proj/widgets/customTextField.dart';
 import 'package:snapchat_proj/widgets/roundedButton.dart';
 
-class Username extends StatelessWidget {
+class Username extends StatefulWidget {
+  TextEditingController _controller1 = TextEditingController();
+
+  @override
+  _UsernameState createState() => _UsernameState();
+}
+
+class _UsernameState extends State<Username> {
+  bool _isValid = false;
+
+  void _toggle() {
+    setState(() {
+      _isValid = widget._controller1.text.isNotEmpty;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +49,8 @@ class Username extends StatelessWidget {
                   ),
                 ),
                 CustomTextField(
-                  labelName: 'USERNAME',
+                  labelName: 'username'.toUpperCase(),
+                  onTextFieldChange: () => _toggle(),
                 ),
               ],
             ),
@@ -41,6 +58,11 @@ class Username extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 15),
               child: RoundedButton(
                 title: 'Continue',
+                onButtonClick: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Password())),
+                color: (_isValid)
+                    ? const Color(0xFF02a9f4)
+                    : const Color(0xFFbcbcbc),
               ),
             ),
           ],

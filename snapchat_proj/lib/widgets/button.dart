@@ -3,20 +3,17 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final Color color;
   final String title;
-  final Function toPage;
-  Button({this.color, this.title, this.toPage});
+  final Function onTapToButton;
+  Button({this.color, this.title, this.onTapToButton});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => toPage()));
-      },
+      onTap: onTapToButton,
       child: Container(
           alignment: Alignment.center, //centered vertically child
           width: double.infinity,
-          height: 50,
+          height: 80,
           decoration: BoxDecoration(
             color: color,
           ),
