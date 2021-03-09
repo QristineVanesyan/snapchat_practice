@@ -14,20 +14,21 @@ class Birthday extends StatefulWidget {
 
 class _BirthdayState extends State<Birthday> {
   bool _isValid = false;
-  DateTime selectedDate = DateTime.now();
   DateTime currentDate = DateTime.now();
+  DateTime selectedDate = DateTime(DateTime.now().year - 16);
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate, // Refer step 1
       firstDate: DateTime(currentDate.year - 110),
-      lastDate: DateTime(currentDate.year + 1), //TODO now.year - 18
+      lastDate: DateTime(currentDate.year - 16), //TODO now.year - 18
     );
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
-        widget._controller1.text = DateFormat.yMd().format(selectedDate);
+        //var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+        widget._controller1.text = DateFormat.yMMMMd().format(selectedDate);
         _toggle();
       });
     print(currentDate.year - 120);

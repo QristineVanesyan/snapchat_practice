@@ -20,12 +20,12 @@ class _SignUpState extends State<SignUp> {
   String username = "";
   String password = "";
   String email = "";
-  // void _toggle() {
-  //   setState(() {
-  //     _isValid = (widget._controller1.text.isNotEmpty ||
-  //         widget._controller2.text.isNotEmpty);
-  //   });
-  // }
+  void _toggle() {
+    setState(() {
+      _isValid = (widget._controller1.text.isNotEmpty ||
+          widget._controller2.text.isNotEmpty);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,20 +58,22 @@ class _SignUpState extends State<SignUp> {
                           validator: (val) => val.length > 2
                               ? "Minimum 2 characters are needed"
                               : null,
-                          onTextFieldChange: (val) {
-                            setState(() {
-                              _isValid = (widget._controller1.text.isNotEmpty ||
-                                  widget._controller2.text.isNotEmpty);
-                              return username = val;
-                            });
-                          },
+                          onTextFieldChange: () => {_toggle()},
+                          // onTextFieldChange: (val) {
+                          //   setState(() {
+                          //     _isValid = (widget._controller1.text.isNotEmpty ||
+                          //         widget._controller2.text.isNotEmpty);
+                          //     return username = val;
+                          //   });
+                          // },
                         ),
                         CustomTextField(
                           labelName: 'last name'.toUpperCase(),
-                          onTextFieldChange: () => {
-                            _isValid = (widget._controller1.text.isNotEmpty ||
-                                widget._controller2.text.isNotEmpty)
-                          },
+                          // onTextFieldChange: () => {
+                          //   _isValid = (widget._controller1.text.isNotEmpty ||
+                          //       widget._controller2.text.isNotEmpty)
+                          // },
+                          onTextFieldChange: () => {_toggle()},
                           customTextFieldController: widget._controller2,
                         ),
                       ],

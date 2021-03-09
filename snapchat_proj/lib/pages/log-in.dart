@@ -12,19 +12,19 @@ class LogIN extends StatefulWidget {
 }
 
 class _LogINState extends State<LogIN> {
-  //bool _isValid = false;
+  bool _isValid = false;
   bool _isValidPassword = false;
   bool _isValidLogin = false;
   final _formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
 
-  // void _toggle() {
-  //   setState(() {
-  //     _isValid = widget._controller1.text.isNotEmpty &&
-  //         widget._controller2.text.isNotEmpty;
-  //   });
-  // }
+  void _toggle() {
+    setState(() {
+      _isValid = widget._controller1.text.isNotEmpty &&
+          widget._controller2.text.isNotEmpty;
+    });
+  }
 
   String validatePassword(String value) {
     if (!RegExp(
@@ -88,13 +88,13 @@ class _LogINState extends State<LogIN> {
                             //     return email = val;
                             //   });
                             // },
-                            //onTextFieldChange: () => {_toggle()},
+                            onTextFieldChange: () => {_toggle()},
                             customTextFieldController: widget._controller1,
                           ),
                           CustomTextField(
                             labelName: 'password',
                             hideInputedText: true,
-                            // onTextFieldChange: () => {_toggle()},
+                            onTextFieldChange: () => {_toggle()},
                             customTextFieldController: widget._controller2,
                             validator: validatePassword,
                             // onTextFieldChange: (val) {
@@ -124,7 +124,7 @@ class _LogINState extends State<LogIN> {
                   onButtonClick: () async {
                     if (_formKey.currentState.validate()) {}
                   },
-                  color: (_isValidLogin && _isValidPassword)
+                  color: (_isValid)
                       ? const Color(0xFF02a9f4)
                       : const Color(0xFFbcbcbc),
                 ),
