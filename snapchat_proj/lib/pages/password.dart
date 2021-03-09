@@ -17,15 +17,6 @@ class _PasswordState extends State<Password> {
     });
   }
 
-  String validatePassword(String value) {
-    if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value)) {
-      return "email is not valid";
-    } else
-      return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,28 +46,13 @@ class _PasswordState extends State<Password> {
                         color: Colors.grey),
                   ),
                 ),
-                // CustomTextField(
-                //   labelName: 'password'.toString(),
-                //   customTextFieldController: widget._controller1,
-                //   hideInputedText: true,
-                //   onTextFieldChange: () => _toggle(),
-                // ),
-
                 CustomTextField(
-                  flatButtonShow: true,
-                  labelName: 'password',
-                  isVisible: false,
-                  hideInputedText: true,
-                  onTextFieldChange: () => {_toggle()},
+                  labelName: 'password'.toString(),
                   customTextFieldController: widget._controller1,
-                  validator: validatePassword,
-                  // onTextFieldChange: (val) {
-                  //   setState(() {
-                  //     _toggle();
-                  //     return password = val;
-                  //   });
-                  // },
-                  //icon: Icon(Icons.visibility_off_outlined),
+                  hideInputedText: true,
+                  flatButtonShow: true,
+                  isVisible: false,
+                  onTextFieldChange: () => _toggle(),
                 ),
               ],
             ),
