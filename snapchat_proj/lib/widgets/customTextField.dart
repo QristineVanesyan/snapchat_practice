@@ -5,32 +5,29 @@ class CustomTextField extends StatefulWidget {
       {Key key,
       this.labelName,
       this.icon,
-      this.hideInputedText = false,
       this.onTextFieldChange,
       this.onTextFieldTap,
       this.validator,
       this.txtType,
-      this.isVisible = true,
-      this.flatButtonShow = false,
+      this.isVisible,
       this.customTextFieldController})
       : super(key: key);
-  @override
-  _State createState() => _State();
 
   final String labelName;
   final Icon icon;
   final Function onTextFieldChange;
   final Function onTextFieldTap;
   final Function validator;
+  final bool isVisible;
   final TextInputType txtType;
-  bool isVisible;
-  bool hideInputedText;
-  bool flatButtonShow;
   final TextEditingController customTextFieldController;
+
+  @override
+  _CustomTextFieldState createState() => _CustomTextFieldState();
 }
 
-class _State extends State<CustomTextField> {
-  bool isEmpty = false;
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,25 +37,13 @@ class _State extends State<CustomTextField> {
         child: TextFormField(
           validator: widget.validator,
           keyboardType: widget.txtType,
-          obscureText: (widget.hideInputedText) ? widget.isVisible : false,
+          obscureText: _obscureOfPassword(),
           controller: widget.customTextFieldController,
           decoration: InputDecoration(
               labelText: widget.labelName.toUpperCase(),
               labelStyle: TextStyle(
                   fontSize: 11, letterSpacing: 1, fontWeight: FontWeight.w500),
-              suffixIcon: widget.icon != null
-                  ? GestureDetector(
-                      child: (widget.isVisible == false)
-                          ? Icon(Icons.visibility_outlined)
-                          : widget.icon,
-                      onTap: _togglePasswordView,
-                    )
-                  : TextButton(
-                      onPressed: _togglePasswordView,
-                      child: (widget.flatButtonShow)
-                          ? new Text(widget.isVisible ? "Show" : "Hide")
-                          : Text(""),
-                    )),
+              suffixIcon: _showAndHideWidget()),
           onChanged: (text) => widget.onTextFieldChange(),
           onTap: () => widget.onTextFieldTap(),
         ),
@@ -66,15 +51,32 @@ class _State extends State<CustomTextField> {
     ]);
   }
 
-  @override
-  void dispose() {
-    widget.customTextFieldController.dispose();
-    super.dispose();
+  bool _obscureOfPassword() {
+    if (widget.isVisible == null) {
+      return false;
+    } else if (widget.isVisible) {
+      return !_obscureText;
+    } else {
+      return _obscureText;
+    }
   }
 
-  void _togglePasswordView() {
+  Widget _showAndHideWidget() {
+    if (widget.isVisible == null)
+      return Text("");
+    else if (widget.isVisible == true)
+      return TextButton(
+          onPressed: _toggle, child: new Text(_obscureText ? "Hide" : "Show"));
+    else
+      return GestureDetector(
+        child: (_obscureText) ? Icon(Icons.visibility_outlined) : widget.icon,
+        onTap: _toggle,
+      );
+  }
+
+  void _toggle() {
     setState(() {
-      widget.isVisible = !widget.isVisible;
+      _obscureText = !_obscureText;
     });
   }
 }

@@ -67,9 +67,9 @@ class _PasswordState extends State<Password> {
                     child: CustomTextField(
                       labelName: 'password'.toString(),
                       customTextFieldController: _passwordTextFieldController,
-                      hideInputedText: true,
-                      flatButtonShow: true,
-                      isVisible: false,
+                      // hideInputedText: true,
+                      // flatButtonShow: true,
+                      isVisible: true,
                       validator: validatePassword,
                       onTextFieldChange: () => _toggle(),
                     ),

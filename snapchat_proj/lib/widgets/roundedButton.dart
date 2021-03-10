@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
-  RoundedButton({this.title, this.isActive, this.color, this.onButtonClick});
+  RoundedButton({this.title, this.color, this.onButtonClick});
 
   final String title;
   final Color color;
   final Function onButtonClick;
 
-  bool isActive = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

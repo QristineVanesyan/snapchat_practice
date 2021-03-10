@@ -61,7 +61,7 @@ class _LogINState extends State<LogIN> {
               ),
               CustomTextField(
                 labelName: 'password',
-                hideInputedText: true,
+                isVisible: false,
                 onTextFieldChange: () => {_toggle()},
                 customTextFieldController: _passwordTextFieldController,
                 icon: Icon(Icons.visibility_off_outlined),
