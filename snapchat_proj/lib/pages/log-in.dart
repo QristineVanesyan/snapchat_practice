@@ -67,7 +67,7 @@ class _LogINState extends State<LogIN> {
                 icon: Icon(Icons.visibility_off_outlined),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 6),
                 child: Text(
                   _msg,
                   style: TextStyle(color: Colors.red, fontSize: 10),
@@ -77,7 +77,7 @@ class _LogINState extends State<LogIN> {
           )),
       Center(
         child: Container(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 10),
           child: Link(
             title: "Forgot your password?",
           ),

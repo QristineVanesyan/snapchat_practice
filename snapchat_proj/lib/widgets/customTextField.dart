@@ -46,12 +46,19 @@ class _State extends State<CustomTextField> {
               labelText: widget.labelName.toUpperCase(),
               labelStyle: TextStyle(
                   fontSize: 11, letterSpacing: 1, fontWeight: FontWeight.w500),
-              suffixIcon: TextButton(
-                onPressed: _togglePasswordView,
-                child: (widget.flatButtonShow)
-                    ? new Text(widget.isVisible ? "Show" : "Hide")
-                    : Text(""),
-              )),
+              suffixIcon: widget.icon != null
+                  ? GestureDetector(
+                      child: (widget.isVisible == false)
+                          ? Icon(Icons.visibility_outlined)
+                          : widget.icon,
+                      onTap: _togglePasswordView,
+                    )
+                  : TextButton(
+                      onPressed: _togglePasswordView,
+                      child: (widget.flatButtonShow)
+                          ? new Text(widget.isVisible ? "Show" : "Hide")
+                          : Text(""),
+                    )),
           onChanged: (text) => widget.onTextFieldChange(),
           onTap: () => widget.onTextFieldTap(),
         ),
