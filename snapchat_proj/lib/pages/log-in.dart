@@ -2,54 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:snapchat_proj/widgets/customTextField.dart';
 import 'package:snapchat_proj/widgets/link.dart';
 import 'package:snapchat_proj/widgets/roundedButton.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LogIN extends StatefulWidget {
   TextEditingController _controller1 = TextEditingController();
   TextEditingController _controller2 = TextEditingController();
-
+  final String _emailfromDB = "test@mail.com";
+  final String _passwordfromDB = "1111";
   @override
   _LogINState createState() => _LogINState();
 }
 
 class _LogINState extends State<LogIN> {
   bool _isValid = false;
-  bool _isValidPassword = false;
-  bool _isValidLogin = false;
+
   final _formKey = GlobalKey<FormState>();
+
   String email = "";
   String password = "";
+  String msg = "";
 
-  void _toggle() {
-    setState(() {
-      _isValid = widget._controller1.text.isNotEmpty &&
-          widget._controller2.text.isNotEmpty;
-    });
-  }
-
-  String validatePassword(String value) {
-    if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value)) {
-      return "email is not valid";
-    } else
-      return null;
-  }
-
-  String validateUsername(String value) {
-    if (value.isEmpty) {
-      _isValidPassword = false;
-      return "* Required";
-    } else if (value.length < 6) {
-      _isValidPassword = false;
-      return "Password should be atleast 6 characters";
-    } else if (value.length > 15) {
-      _isValidPassword = false;
-      return "Password should not be greater than 15 characters";
-    } else {
-      _isValidPassword = true;
-      return null;
-    }
-  }
+  // String validateUsername(String value) {
+  //   if (value.isEmpty) {
+  //     _isValidPassword = false;
+  //     return "* Required";
+  //   } else if (value.length < 6) {
+  //     _isValidPassword = false;
+  //     return "Password should be atleast 6 characters";
+  //   } else if (value.length > 15) {
+  //     _isValidPassword = false;
+  //     return "Password should not be greater than 15 characters";
+  //   } else {
+  //     _isValidPassword = true;
+  //     return null;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +65,7 @@ class _LogINState extends State<LogIN> {
                         children: [
                           CustomTextField(
                             labelName: 'username or email',
-                            validator: validateUsername,
+                            // validator: validateUsername,
                             //(val) =>
                             // val.isEmpty ? "Enter an email" : null,
 
@@ -96,7 +83,7 @@ class _LogINState extends State<LogIN> {
                             hideInputedText: true,
                             onTextFieldChange: () => {_toggle()},
                             customTextFieldController: widget._controller2,
-                            validator: validatePassword,
+                            //validator: validatePassword,
                             // onTextFieldChange: (val) {
                             //   setState(() {
                             //     _toggle();
@@ -104,6 +91,13 @@ class _LogINState extends State<LogIN> {
                             //   });
                             // },
                             icon: Icon(Icons.visibility_off_outlined),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              msg,
+                              style: TextStyle(color: Colors.red, fontSize: 10),
+                            ),
                           ),
                         ],
                       )),
@@ -122,7 +116,21 @@ class _LogINState extends State<LogIN> {
                 child: RoundedButton(
                   title: 'Log In',
                   onButtonClick: () async {
-                    if (_formKey.currentState.validate()) {}
+                    setState(() {
+                      //_isValid = widget._controller1.text.isNotEmpty &&
+                      //    widget._controller2.text.isNotEmpty;
+
+                      if (_isValid) {
+                        if (widget._emailfromDB == widget._controller1.text &&
+                            widget._passwordfromDB ==
+                                widget._controller2.text) {
+                          print("User log in to session");
+                        } else {
+                          msg =
+                              "Oops! Your username/email or password is incorrect.";
+                        }
+                      }
+                    });
                   },
                   color: (_isValid)
                       ? const Color(0xFF02a9f4)
@@ -132,5 +140,12 @@ class _LogINState extends State<LogIN> {
             ],
           )),
     );
+  }
+
+  void _toggle() {
+    setState(() {
+      _isValid = widget._controller1.text.isNotEmpty &&
+          widget._controller2.text.isNotEmpty;
+    });
   }
 }

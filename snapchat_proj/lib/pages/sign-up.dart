@@ -128,8 +128,9 @@ class _SignUpState extends State<SignUp> {
                 child: RoundedButton(
                   title: 'Sing Up & Accept',
                   onButtonClick: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Birthday()))
+                    if (_isValid)
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Birthday()))
                   },
                   color: (_isValid)
                       ? const Color(0xFF02a9f4)
