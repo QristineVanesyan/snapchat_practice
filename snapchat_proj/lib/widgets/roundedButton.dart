@@ -8,12 +8,12 @@ class RoundedButton extends StatelessWidget {
   final Function onButtonClick;
 
   bool isActive = false;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {onButtonClick()},
       child: Container(
+          margin: const EdgeInsets.only(bottom: 20),
           alignment: Alignment.center, //centered vertically child
           height: 40,
           width: 200,

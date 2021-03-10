@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
-  final String labelName;
-  final Icon icon;
-  final Function onTextFieldChange;
-  final Function onTextFieldTap;
-  final Function validator;
-  final TextInputType txtType;
-  bool isVisible;
-  bool hideInputedText;
-  bool flatButtonShow;
-  final TextEditingController customTextFieldController;
-
   CustomTextField(
       {Key key,
       this.labelName,
@@ -27,6 +16,17 @@ class CustomTextField extends StatefulWidget {
       : super(key: key);
   @override
   _State createState() => _State();
+
+  final String labelName;
+  final Icon icon;
+  final Function onTextFieldChange;
+  final Function onTextFieldTap;
+  final Function validator;
+  final TextInputType txtType;
+  bool isVisible;
+  bool hideInputedText;
+  bool flatButtonShow;
+  final TextEditingController customTextFieldController;
 }
 
 class _State extends State<CustomTextField> {
@@ -46,19 +46,12 @@ class _State extends State<CustomTextField> {
               labelText: widget.labelName.toUpperCase(),
               labelStyle: TextStyle(
                   fontSize: 11, letterSpacing: 1, fontWeight: FontWeight.w500),
-              suffixIcon: widget.icon != null
-                  ? GestureDetector(
-                      child: (widget.isVisible == false)
-                          ? Icon(Icons.visibility_outlined)
-                          : widget.icon,
-                      onTap: _togglePasswordView,
-                    )
-                  : TextButton(
-                      onPressed: _togglePasswordView,
-                      child: (widget.flatButtonShow)
-                          ? new Text(widget.isVisible ? "Show" : "Hide")
-                          : Text(""),
-                    )),
+              suffixIcon: TextButton(
+                onPressed: _togglePasswordView,
+                child: (widget.flatButtonShow)
+                    ? new Text(widget.isVisible ? "Show" : "Hide")
+                    : Text(""),
+              )),
           onChanged: (text) => widget.onTextFieldChange(),
           onTap: () => widget.onTextFieldTap(),
         ),

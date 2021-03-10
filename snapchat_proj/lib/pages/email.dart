@@ -4,32 +4,35 @@ import 'package:snapchat_proj/widgets/link.dart';
 import 'package:snapchat_proj/widgets/roundedButton.dart';
 
 class Email extends StatefulWidget {
-  TextEditingController _controller1 = TextEditingController();
   @override
   _EmailState createState() => _EmailState();
 }
 
 class _EmailState extends State<Email> {
+  TextEditingController _emailTextFieldController = TextEditingController();
+
   bool _isValid = false;
 
   void _toggle() {
     setState(() {
       _isValid = RegExp(
               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(widget._controller1.text);
+          .hasMatch(_emailTextFieldController.text);
     });
   }
-
-  //String validateEmail(String value) {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.blue,
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Container(
+        padding: const EdgeInsets.only(top: 70),
         color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +54,7 @@ class _EmailState extends State<Email> {
                 CustomTextField(
                   labelName: 'email'.toUpperCase(),
                   onTextFieldChange: () => _toggle(),
-                  customTextFieldController: widget._controller1,
+                  customTextFieldController: _emailTextFieldController,
                   // validator: validateEmail,
                 ),
               ],
@@ -61,10 +64,7 @@ class _EmailState extends State<Email> {
               child: RoundedButton(
                 title: 'Continue',
                 onButtonClick: () async {
-                  // if (_isValid) {
-                  //   Navigator.push(context,
-                  //       MaterialPageRoute(builder: (context) => null()));
-                  // }
+                  // Phone Number Page
                 },
                 color: (_isValid)
                     ? const Color(0xFF02a9f4)
