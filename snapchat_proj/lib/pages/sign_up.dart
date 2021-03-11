@@ -11,6 +11,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final String privacyPolicyUrl =
+      'https://snap.com/en-US/privacy/privacy-policy';
+  final String termsUrl = 'https://snap.com/en-US/terms';
+
   final TextEditingController _fnameTextFieldController =
       TextEditingController();
   final TextEditingController _lnameTextFieldController =
@@ -83,7 +87,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      _launchURL();
+                      _launchURL(privacyPolicyUrl);
                     }),
               const TextSpan(
                 text: ' and agree to the ',
@@ -95,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      _launchURL();
+                      _launchURL(termsUrl);
                     }),
               const TextSpan(
                 //ASK for one point i neet create new TextSpan????????????
@@ -130,8 +134,7 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  Future<void> _launchURL() async {
-    const url = 'https://flutter.io';
+  Future<void> _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {

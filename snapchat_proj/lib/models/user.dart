@@ -7,7 +7,7 @@ class User {
       this.birtdate,
       @required this.username,
       this.email,
-      this.phoneNumber,
+      @required this.phoneNumber,
       @required this.password});
 
   final String fname;
