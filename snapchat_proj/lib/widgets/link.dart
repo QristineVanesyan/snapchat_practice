@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 
-class Link extends StatelessWidget {
-  final String title;
+class Link extends StatefulWidget {
   const Link({this.title});
+  final String title;
+  @override
+  _LinkState createState() => _LinkState();
+}
+
+class _LinkState extends State<Link> {
   @override
   Widget build(BuildContext context) {
-    Text(
-      title,
-      style: const TextStyle(
-        fontSize: 11,
-        color: Colors.blue,
-        fontWeight: FontWeight.w500,
+    return GestureDetector(
+      child: Text(
+        widget.title,
+        style: const TextStyle(
+          fontSize: 11,
+          color: Colors.blue,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
-    return GestureDetector(onTap: () {
-      //TODO "forget password" page
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
-    });
   }
 }

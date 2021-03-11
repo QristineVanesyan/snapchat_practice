@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
-  CustomTextField(
+  const CustomTextField(
       {Key key,
       this.labelName,
       this.icon,
@@ -18,7 +18,7 @@ class CustomTextField extends StatefulWidget {
   final Icon icon;
   final Function onTextFieldChange;
   final Function onTextFieldTap;
-  final Function validator;
+  final String Function(String) validator;
   final bool isVisible;
   final bool isTapable;
   final TextInputType txtType;
@@ -37,9 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: TextFormField(
-          validator: () {
-            widget.validator();
-          },
+          validator: (s) => widget.validator(s),
           keyboardType: widget.txtType,
           obscureText: _obscureOfPassword(),
           controller: widget.customTextFieldController,
@@ -71,9 +69,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       return const Text("");
     } else if (widget.isVisible == true) {
       return TextButton(
-          // ignore: unnecessary_new
-          onPressed: _toggle,
-          child: new Text(_obscureText ? "Hide" : "Show"));
+          onPressed: _toggle, child: Text(_obscureText ? "Hide" : "Show"));
     } else {
       return GestureDetector(
         onTap: _toggle,

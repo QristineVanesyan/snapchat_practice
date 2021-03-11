@@ -32,6 +32,8 @@ class _LogINState extends State<LogIN> {
         elevation: 0,
       ),
       body: Container(
+          width: double.infinity,
+          height: double.infinity,
           padding: const EdgeInsets.only(top: 70),
           color: Colors.white,
           child: Column(
@@ -112,12 +114,8 @@ class _LogINState extends State<LogIN> {
 
   void _toggle() {
     setState(() {
-      try {
-        _isValid = _emailTextFieldController.text.isNotEmpty &&
-            _passwordTextFieldController.text.isNotEmpty;
-      } catch (exception) {
-        print(exception.toString());
-      }
+      _isValid = _emailTextFieldController.text.isNotEmpty &&
+          _passwordTextFieldController.text.isNotEmpty;
     });
   }
 

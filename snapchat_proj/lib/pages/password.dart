@@ -9,7 +9,8 @@ class Password extends StatefulWidget {
 }
 
 class _PasswordState extends State<Password> {
-  TextEditingController _passwordTextFieldController = TextEditingController();
+  final TextEditingController _passwordTextFieldController =
+      TextEditingController();
 
   bool _isValid = false;
 
@@ -19,7 +20,7 @@ class _PasswordState extends State<Password> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.blue,
         ),
         backgroundColor: Colors.white,
@@ -97,11 +98,10 @@ class _PasswordState extends State<Password> {
   }
 
   String _validatePassword(String value) {
-    if (value.length < 8) {
+    if (_passwordTextFieldController.text.length < 8) {
       return "Your password must be at least 8 characters.";
-    } else {
-      return null;
     }
+    return null;
   }
 
   Color _changeColor() {

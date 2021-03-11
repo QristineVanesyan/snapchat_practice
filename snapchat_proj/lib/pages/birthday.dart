@@ -42,9 +42,9 @@ class _BirthdayState extends State<Birthday> {
   Widget _renderBirthDay() {
     return Column(
       children: [
-        Text(
+        const Text(
           "When's your birthday?",
-          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
         ),
         CustomTextField(
           labelName: 'birthday'.toUpperCase(),

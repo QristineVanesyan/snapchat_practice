@@ -49,12 +49,12 @@ class HomePage extends StatelessWidget {
                 Button(
                   title: 'log in',
                   color: const Color(0xFFd83c3c),
-                  pageName: LogIN(),
+                  toPage: LogIN(),
                 ),
                 Button(
                   title: 'sign up',
                   color: const Color(0xFF03a9f4),
-                  pageName: SignUp(),
+                  toPage: SignUp(),
                 ),
               ],
             )

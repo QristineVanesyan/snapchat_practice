@@ -23,7 +23,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.blue,
         ),
         backgroundColor: Colors.white,
@@ -45,16 +45,13 @@ class _SignUpState extends State<SignUp> {
       key: _formKey,
       child: Column(
         children: [
-          Text(
-            'What\'s your name?',
+          const Text(
+            "What's your name?",
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
           ),
           CustomTextField(
             labelName: 'first name'.toUpperCase(),
             customTextFieldController: _fnameTextFieldController,
-            validator: (val) => val.length > 2 != null
-                ? "Minimum 2 characters are needed"
-                : null,
             onTextFieldChange: () => {_toggle()},
           ),
           CustomTextField(
@@ -121,24 +118,32 @@ class _SignUpState extends State<SignUp> {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Birthday()))
         },
-        color: (_isValid) ? const Color(0xFF02a9f4) : const Color(0xFFbcbcbc),
+        color: _changeColor(),
       ),
     );
   }
 
   void _toggle() {
     setState(() {
-      _isValid = (_fnameTextFieldController.text.isNotEmpty ||
-          _lnameTextFieldController.text.isNotEmpty);
+      _isValid = _fnameTextFieldController.text.isNotEmpty ||
+          _lnameTextFieldController.text.isNotEmpty;
     });
   }
 
-  _launchURL() async {
+  Future<void> _launchURL() async {
     const url = 'https://flutter.io';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
+    }
+  }
+
+  Color _changeColor() {
+    if (_isValid) {
+      return const Color(0xFF02a9f4);
+    } else {
+      return const Color(0xFFbcbcbc);
     }
   }
 }
