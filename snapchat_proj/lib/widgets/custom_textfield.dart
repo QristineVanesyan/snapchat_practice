@@ -9,6 +9,7 @@ class CustomTextField extends StatefulWidget {
       this.onTextFieldTap,
       this.validator,
       this.txtType,
+      this.isTapable,
       this.isVisible,
       this.customTextFieldController})
       : super(key: key);
@@ -19,6 +20,7 @@ class CustomTextField extends StatefulWidget {
   final Function onTextFieldTap;
   final Function validator;
   final bool isVisible;
+  final bool isTapable;
   final TextInputType txtType;
   final TextEditingController customTextFieldController;
 
@@ -35,17 +37,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: TextFormField(
-          validator: widget.validator,
+          validator: () {
+            widget.validator();
+          },
           keyboardType: widget.txtType,
           obscureText: _obscureOfPassword(),
           controller: widget.customTextFieldController,
           decoration: InputDecoration(
               labelText: widget.labelName.toUpperCase(),
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                   fontSize: 11, letterSpacing: 1, fontWeight: FontWeight.w500),
               suffixIcon: _showAndHideWidget()),
           onChanged: (text) => widget.onTextFieldChange(),
-          onTap: () => widget.onTextFieldTap(),
+          onTap: () =>
+              (widget.isTapable == true) ? widget.onTextFieldTap() : "",
         ),
       ),
     ]);
@@ -62,16 +67,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   Widget _showAndHideWidget() {
-    if (widget.isVisible == null)
-      return Text("");
-    else if (widget.isVisible == true)
+    if (widget.isVisible == null) {
+      return const Text("");
+    } else if (widget.isVisible == true) {
       return TextButton(
-          onPressed: _toggle, child: new Text(_obscureText ? "Hide" : "Show"));
-    else
+          // ignore: unnecessary_new
+          onPressed: _toggle,
+          child: new Text(_obscureText ? "Hide" : "Show"));
+    } else {
       return GestureDetector(
-        child: (_obscureText) ? Icon(Icons.visibility_outlined) : widget.icon,
         onTap: _toggle,
+        child:
+            _obscureText ? const Icon(Icons.visibility_outlined) : widget.icon,
       );
+    }
   }
 
   void _toggle() {

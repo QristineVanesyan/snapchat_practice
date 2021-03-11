@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:snapchat_proj/pages/userName.dart';
-import 'package:snapchat_proj/widgets/customTextField.dart';
-import 'package:snapchat_proj/widgets/roundedButton.dart';
 import 'package:intl/intl.dart';
+import 'package:snapchat_proj/pages/user_name.dart';
+import 'package:snapchat_proj/widgets/custom_textfield.dart';
+import 'package:snapchat_proj/widgets/rounded_button.dart';
 
 class Birthday extends StatefulWidget {
   @override
@@ -10,17 +10,19 @@ class Birthday extends StatefulWidget {
 }
 
 class _BirthdayState extends State<Birthday> {
-  TextEditingController _birthdayTextFieldController = TextEditingController();
+  final TextEditingController _birthdayTextFieldController =
+      TextEditingController();
 
   bool _isValid = false;
-  DateTime _currentDate = DateTime.now();
-  DateTime _selectedDate = DateTime(DateTime.now().year);
+
+  final DateTime _currentDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.blue,
         ),
         backgroundColor: Colors.white,
@@ -41,13 +43,18 @@ class _BirthdayState extends State<Birthday> {
     return Column(
       children: [
         Text(
-          "When'\s your birthday?",
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+          "When's your birthday?",
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
         ),
         CustomTextField(
           labelName: 'birthday'.toUpperCase(),
-          onTextFieldTap: () => _selectDate(context),
-          onTextFieldChange: () => _toggle(),
+          isTapable: true,
+          onTextFieldTap: () {
+            _selectDate(context);
+          },
+          onTextFieldChange: () {
+            _toggle();
+          },
           customTextFieldController: _birthdayTextFieldController,
         ),
       ],
@@ -66,28 +73,11 @@ class _BirthdayState extends State<Birthday> {
               MaterialPageRoute(
                 builder: (context) => Username(),
               ),
-            ), // GENERATE USERNAME
+            ), //TODO GENERATE USERNAME
         },
-        color: (_isValid) ? const Color(0xFF02a9f4) : const Color(0xFFbcbcbc),
+        color: _changeColor(),
       ),
     );
-  }
-
-  int calculateAge(DateTime birthDate) {
-    DateTime _currentDate = DateTime.now();
-    int age = _currentDate.year - birthDate.year;
-    int month1 = _currentDate.month;
-    int month2 = birthDate.month;
-    if (month2 > month1) {
-      age--;
-    } else if (month1 == month2) {
-      int day1 = _currentDate.day;
-      int day2 = birthDate.day;
-      if (day2 > day1) {
-        age--;
-      }
-    }
-    return age;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -97,20 +87,47 @@ class _BirthdayState extends State<Birthday> {
       firstDate: DateTime(_currentDate.year - 110),
       lastDate: DateTime(_currentDate.year + 1),
     );
-    if (picked != null && picked != _selectedDate)
+    if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
         _birthdayTextFieldController.text =
             DateFormat.yMMMMd().format(_selectedDate);
         _toggle();
       });
-    print(_currentDate.year - 120);
+    }
   }
 
   void _toggle() {
     setState(() {
       _isValid = (_birthdayTextFieldController.text.isNotEmpty) &&
-          calculateAge(_selectedDate) >= 18;
+          DateTimeCalculator._getAge(_selectedDate) >= 16;
     });
+  }
+
+  Color _changeColor() {
+    if (_isValid) {
+      return const Color(0xFF02a9f4);
+    } else {
+      return const Color(0xFFbcbcbc);
+    }
+  }
+}
+
+extension DateTimeCalculator on DateTime {
+  static int _getAge(DateTime birthDate) {
+    final DateTime _currentDate = DateTime.now();
+    int age = _currentDate.year - birthDate.year;
+    final int month1 = _currentDate.month;
+    final int month2 = birthDate.month;
+    if (month2 > month1) {
+      age--;
+    } else if (month1 == month2) {
+      final int day1 = _currentDate.day;
+      final int day2 = birthDate.day;
+      if (day2 > day1) {
+        age--;
+      }
+    }
+    return age;
   }
 }

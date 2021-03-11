@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:snapchat_proj/widgets/customTextField.dart';
+import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/link.dart';
-import 'package:snapchat_proj/widgets/roundedButton.dart';
+import 'package:snapchat_proj/widgets/rounded_button.dart';
+import 'package:flutter/material.dart';
 
 class Email extends StatefulWidget {
   @override
@@ -9,23 +9,17 @@ class Email extends StatefulWidget {
 }
 
 class _EmailState extends State<Email> {
-  TextEditingController _emailTextFieldController = TextEditingController();
+  final TextEditingController _emailTextFieldController =
+      TextEditingController();
 
   bool _isValid = false;
-
-  void _toggle() {
-    setState(() {
-      _isValid = RegExp(
-              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(_emailTextFieldController.text);
-    });
-  }
+  String get _text => _emailTextFieldController.text;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.blue,
         ),
         backgroundColor: Colors.white,
@@ -37,43 +31,68 @@ class _EmailState extends State<Email> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                Text(
-                  'What\'s your email address?',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Link(
-                      title: 'Sign up with phone number instead',
-                    ),
-                  ),
-                ),
-                CustomTextField(
-                  labelName: 'email'.toUpperCase(),
-                  onTextFieldChange: () => _toggle(),
-                  customTextFieldController: _emailTextFieldController,
-                  // validator: validateEmail,
-                ),
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: RoundedButton(
-                title: 'Continue',
-                onButtonClick: () async {
-                  // Phone Number Page
-                },
-                color: (_isValid)
-                    ? const Color(0xFF02a9f4)
-                    : const Color(0xFFbcbcbc),
-              ),
-            ),
+            _renderEmailForm(),
+            _renderContinueButton(),
           ],
         ),
       ),
     );
   }
+
+  Widget _renderEmailForm() {
+    return Column(
+      children: [
+        const Text(
+          "What's your email address?",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        Center(
+          child: Container(
+            padding: const EdgeInsets.only(top: 10),
+            child: const Link(
+              title: 'Sign up with phone number instead',
+            ),
+          ),
+        ),
+        CustomTextField(
+          labelName: 'email'.toUpperCase(),
+          onTextFieldChange: () => _toggle(),
+          customTextFieldController: _emailTextFieldController,
+        ),
+      ],
+    );
+  }
+
+  Widget _renderContinueButton() {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: RoundedButton(
+        title: 'Continue',
+        onButtonClick: () async {
+          //TODO Phone Number Page
+        },
+        color: _changeColor(),
+      ),
+    );
+  }
+
+  Color _changeColor() {
+    if (_isValid) {
+      return const Color(0xFF02a9f4);
+    } else {
+      return const Color(0xFFbcbcbc);
+    }
+  }
+
+  void _toggle() {
+    setState(() {
+      _isValid = _text.validateEmail;
+    });
+  }
+}
+
+extension _StringValidation on String {
+  bool get validateEmail => RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(this);
 }

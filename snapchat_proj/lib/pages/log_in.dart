@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:snapchat_proj/widgets/customTextField.dart';
+import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/link.dart';
-import 'package:snapchat_proj/widgets/roundedButton.dart';
+import 'package:snapchat_proj/widgets/rounded_button.dart';
 
 class LogIN extends StatefulWidget {
   @override
@@ -25,7 +25,7 @@ class _LogINState extends State<LogIN> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.blue,
         ),
         backgroundColor: Colors.white,
@@ -46,7 +46,7 @@ class _LogINState extends State<LogIN> {
 
   Widget _renderForm() {
     return Column(children: [
-      Text(
+      const Text(
         "Log In",
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
       ),
@@ -91,13 +91,13 @@ class _LogINState extends State<LogIN> {
       padding: const EdgeInsets.only(bottom: 15),
       child: RoundedButton(
         title: "Log In",
-        onButtonClick: () async => checkUser(),
-        color: (_isValid) ? const Color(0xFF02a9f4) : const Color(0xFFbcbcbc),
+        onButtonClick: () async => _checkUser(),
+        color: _changeColor(),
       ),
     );
   }
 
-  void checkUser() {
+  void _checkUser() {
     setState(() {
       if (_isValid) {
         if (!(_emailfromDB == _emailTextFieldController.text.trim() &&
@@ -112,8 +112,20 @@ class _LogINState extends State<LogIN> {
 
   void _toggle() {
     setState(() {
-      _isValid = _emailTextFieldController.text.isNotEmpty &&
-          _passwordTextFieldController.text.isNotEmpty;
+      try {
+        _isValid = _emailTextFieldController.text.isNotEmpty &&
+            _passwordTextFieldController.text.isNotEmpty;
+      } catch (exception) {
+        print(exception.toString());
+      }
     });
+  }
+
+  Color _changeColor() {
+    if (_isValid) {
+      return const Color(0xFF02a9f4);
+    } else {
+      return const Color(0xFFbcbcbc);
+    }
   }
 }
