@@ -9,8 +9,8 @@ class LogIN extends StatefulWidget {
 }
 
 class _LogINState extends State<LogIN> {
-  TextEditingController _emailTextFieldController = TextEditingController();
-  TextEditingController _passwordTextFieldController = TextEditingController();
+  final TextEditingController _emailTextFieldController = TextEditingController();
+  final TextEditingController _passwordTextFieldController = TextEditingController();
 
   final String _emailfromDB = "test@mail.com";
   final String _passwordfromDB = "1111";
@@ -66,13 +66,13 @@ class _LogINState extends State<LogIN> {
                 isVisible: false,
                 onTextFieldChange: () => {_toggle()},
                 customTextFieldController: _passwordTextFieldController,
-                icon: Icon(Icons.visibility_off_outlined),
+                icon: const Icon(Icons.visibility_off_outlined),
               ),
               Container(
                 padding: const EdgeInsets.only(top: 6),
                 child: Text(
                   _msg,
-                  style: TextStyle(color: Colors.red, fontSize: 10),
+                  style: const TextStyle(color: Colors.red, fontSize: 10),
                 ),
               ),
             ],
@@ -80,7 +80,7 @@ class _LogINState extends State<LogIN> {
       Center(
         child: Container(
           padding: const EdgeInsets.only(top: 10),
-          child: Link(
+          child: const Link(
             title: "Forgot your password?",
           ),
         ),

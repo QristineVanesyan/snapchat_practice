@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class User {
   const User(
-      {this.fname,
+      {
+      this.id,
+      this.fname,
       this.lname,
       this.birtdate,
       @required this.username,
@@ -10,6 +12,7 @@ class User {
       @required this.phoneNumber,
       @required this.password});
 
+  final int id;
   final String fname;
   final String lname;
   final DateTime birtdate;

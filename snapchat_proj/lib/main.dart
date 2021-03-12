@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+
   Color get _themeColor => const Color(0xFFFFFC00);
   Widget get _themeIcon => Image.asset(
         'assets/images/logo.png',

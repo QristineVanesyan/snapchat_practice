@@ -11,8 +11,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final String privacyPolicyUrl =
-      'https://snap.com/en-US/privacy/privacy-policy';
+  final String privacyPolicyUrl = 'https://snap.com/en-US/privacy/privacy-policy';
   final String termsUrl = 'https://snap.com/en-US/terms';
 
   final TextEditingController _fnameTextFieldController =
