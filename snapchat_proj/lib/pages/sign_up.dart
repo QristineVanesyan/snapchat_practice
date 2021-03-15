@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:snapchat_proj/models/data.dart';
 import 'package:snapchat_proj/pages/birthday.dart';
 import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/rounded_button.dart';
@@ -11,7 +13,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final String privacyPolicyUrl = 'https://snap.com/en-US/privacy/privacy-policy';
+  final String privacyPolicyUrl =
+      'https://snap.com/en-US/privacy/privacy-policy';
   final String termsUrl = 'https://snap.com/en-US/terms';
 
   final TextEditingController _fnameTextFieldController =
@@ -31,6 +34,7 @@ class _SignUpState extends State<SignUp> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
+        title: Text(context.watch<Data>().getData), //TODO
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 70),
@@ -130,6 +134,9 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       _isValid = _fnameTextFieldController.text.isNotEmpty ||
           _lnameTextFieldController.text.isNotEmpty;
+      context
+          .read<Data>()
+          .changeString(_fnameTextFieldController.text); //TODOSS
     });
   }
 
