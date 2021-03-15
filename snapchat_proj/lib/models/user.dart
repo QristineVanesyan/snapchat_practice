@@ -1,23 +1,17 @@
-import 'package:flutter/material.dart';
-
 class User {
-  const User(
-      {
-      this.id,
-      this.fname,
-      this.lname,
-      this.birtdate,
-      @required this.username,
-      this.email,
-      @required this.phoneNumber,
-      @required this.password});
+  int id;
+  String name;
+  String email;
+  String phone;
 
-  final int id;
-  final String fname;
-  final String lname;
-  final DateTime birtdate;
-  final String username;
-  final String email;
-  final String phoneNumber;
-  final String password;
+  User({this.id, this.name, this.email, this.phone});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      phone: json['phone'],
+    );
+  }
 }
