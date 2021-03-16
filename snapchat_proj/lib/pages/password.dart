@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:snapchat_proj/models/user_provider.dart';
 import 'package:snapchat_proj/pages/email.dart';
 import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/rounded_button.dart';
 
 class Password extends StatefulWidget {
+  UserObj user;
+  Password(this.user);
   @override
   _PasswordState createState() => _PasswordState();
 }
@@ -82,8 +85,9 @@ class _PasswordState extends State<Password> {
         title: 'Continue',
         onButtonClick: () async {
           if (_formKey.currentState.validate()) {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Email()));
+            setData();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Email(widget.user)));
           }
         },
         color: _changeColor(),
@@ -95,6 +99,10 @@ class _PasswordState extends State<Password> {
     setState(() {
       _isValid = _passwordTextFieldController.text.isNotEmpty;
     });
+  }
+
+  void setData() {
+    widget.user.password = _passwordTextFieldController.text;
   }
 
   String _validatePassword(String value) {

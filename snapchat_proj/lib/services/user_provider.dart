@@ -11,8 +11,10 @@ class UserProvider {
         await http.get('http://jsonplaceholder.typicode.com/users');
 
     if (response.statusCode == 200) {
-      final List<dynamic> userJson = json.decode(response.body);
-      return userJson.map((json) => User.fromJson(json)).toList();
+      // print(response.body.toString());
+      //final List<dynamic> userJson = json.decode(response.body);
+      // return ["ewrew","werwer","werwerwerew"]//userJson.map((json) => User.fromJson(json)).toList();
+      return null;
     } else {
       throw Exception('Error fetching users');
     }

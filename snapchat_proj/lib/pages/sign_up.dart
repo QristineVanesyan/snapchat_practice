@@ -1,11 +1,19 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:snapchat_proj/models/data.dart';
+import 'package:snapchat_proj/models/user_provider.dart';
 import 'package:snapchat_proj/pages/birthday.dart';
 import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/rounded_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+/*
+
+context.watch<Data>().getData
+
+navigatorKey: _mainNavigatorKey;
+context.read<UserObj>().firstName = _fnameTextFieldController.text;
+    context.read<UserObj>().lastName = _lnameTextFieldController.text;
+*/
 
 class SignUp extends StatefulWidget {
   @override
@@ -13,6 +21,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  UserObj user = UserObj();
+
   final String privacyPolicyUrl =
       'https://snap.com/en-US/privacy/privacy-policy';
   final String termsUrl = 'https://snap.com/en-US/terms';
@@ -34,7 +44,6 @@ class _SignUpState extends State<SignUp> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(context.watch<Data>().getData), //TODO
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 70),
@@ -105,7 +114,7 @@ class _SignUpState extends State<SignUp> {
                       _launchURL(termsUrl);
                     }),
               const TextSpan(
-                //ASK for one point i neet create new TextSpan????????????
+                //TODO ASK for one point i neet create new TextSpan????????????
                 text: '.',
               )
             ],
@@ -120,10 +129,9 @@ class _SignUpState extends State<SignUp> {
       padding: const EdgeInsets.only(bottom: 15),
       child: RoundedButton(
         title: 'Sing Up & Accept',
-        onButtonClick: () => {
-          if (_isValid)
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Birthday()))
+        onButtonClick: () {
+          if (!_isValid) return;
+          onButtonClickFunctionality();
         },
         color: _changeColor(),
       ),
@@ -132,11 +140,7 @@ class _SignUpState extends State<SignUp> {
 
   void _toggle() {
     setState(() {
-      _isValid = _fnameTextFieldController.text.isNotEmpty ||
-          _lnameTextFieldController.text.isNotEmpty;
-      context
-          .read<Data>()
-          .changeString(_fnameTextFieldController.text); //TODOSS
+      _isValid = checkTextFields();
     });
   }
 
@@ -154,5 +158,24 @@ class _SignUpState extends State<SignUp> {
     } else {
       return const Color(0xFFbcbcbc);
     }
+  }
+
+  bool checkTextFields() {
+    return _fnameTextFieldController.text.isNotEmpty ||
+        _lnameTextFieldController.text.isNotEmpty;
+  }
+
+  void onButtonClickFunctionality() {
+    setData();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Birthday(user),
+        ));
+  }
+
+  void setData() {
+    user.firstName = _fnameTextFieldController.text;
+    user.lastName = _fnameTextFieldController.text;
   }
 }

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:snapchat_proj/models/data.dart';
-import 'package:snapchat_proj/models/user.dart';
+
+import 'package:snapchat_proj/models/user_provider.dart';
 import 'package:snapchat_proj/pages/log_in.dart';
 import 'package:snapchat_proj/pages/sign_up.dart';
 import 'package:snapchat_proj/widgets/button.dart';
 import 'package:snapchat_proj/widgets/user_list.dart';
 
 class HomePage extends StatelessWidget {
-  User user = User(name: "username");
+  UserObj user = UserObj();
+  List<UserObj> users = [];
+  //User user = User(name: "username");
   Color get _themeColor => const Color(0xFFFFFC00);
   Widget get _themeIcon => Image.asset(
         'assets/images/logo.png',
@@ -44,8 +46,8 @@ class HomePage extends StatelessWidget {
                 Button(
                   title: 'sign up',
                   color: const Color(0xFF03a9f4),
-                  toPage: ChangeNotifierProvider<Data>(
-                      create: (context) => Data(), child: SignUp()),
+                  toPage: ChangeNotifierProvider<UserObj>(
+                      create: (context) => user, child: SignUp()),
                 ),
               ],
             )

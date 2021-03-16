@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:snapchat_proj/models/user_provider.dart';
 import 'package:snapchat_proj/pages/user_name.dart';
 import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/rounded_button.dart';
 
 class Birthday extends StatefulWidget {
+  UserObj user;
+  Birthday(this.user);
+
   @override
   _BirthdayState createState() => _BirthdayState();
 }
@@ -20,6 +24,8 @@ class _BirthdayState extends State<Birthday> {
 
   @override
   Widget build(BuildContext context) {
+    //context.read<UserObj>().firstName = _birthdayTextFieldController.text;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -66,18 +72,23 @@ class _BirthdayState extends State<Birthday> {
       padding: const EdgeInsets.only(bottom: 15),
       child: RoundedButton(
         title: 'Continue',
-        onButtonClick: () => {
-          if (_isValid)
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Username(),
-              ),
-            ), //TODO GENERATE USERNAME
+        onButtonClick: () {
+          if (!_isValid) return;
+          setData();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Username(widget.user),
+            ),
+          ); //TODO GENERATE USERNAME
         },
         color: _changeColor(),
       ),
     );
+  }
+
+  void setData() {
+    widget.user.birthdate = _selectedDate;
   }
 
   Future<void> _selectDate(BuildContext context) async {

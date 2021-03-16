@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:snapchat_proj/models/user_provider.dart';
 import 'package:snapchat_proj/pages/password.dart';
 import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/rounded_button.dart';
 
 class Username extends StatefulWidget {
+  UserObj user;
+  Username(this.user);
   @override
   _UsernameState createState() => _UsernameState();
 }
@@ -75,8 +78,11 @@ class _UsernameState extends State<Username> {
         onButtonClick: () {
           setState(() {
             if (_isValid) {
+              setData();
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Password()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Password(widget.user)));
             }
           });
         },
@@ -109,6 +115,10 @@ class _UsernameState extends State<Username> {
         );
       }
     });
+  }
+
+  void setData() {
+    widget.user.username = _usernameTextFieldController.text;
   }
 
   Color _changeColor() {

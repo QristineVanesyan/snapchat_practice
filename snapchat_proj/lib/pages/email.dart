@@ -1,9 +1,13 @@
+import 'package:snapchat_proj/models/user_provider.dart';
+import 'package:snapchat_proj/pages/user_profile.dart';
 import 'package:snapchat_proj/widgets/custom_textfield.dart';
 import 'package:snapchat_proj/widgets/link.dart';
 import 'package:snapchat_proj/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 class Email extends StatefulWidget {
+  UserObj user;
+  Email(this.user);
   @override
   _EmailState createState() => _EmailState();
 }
@@ -69,11 +73,21 @@ class _EmailState extends State<Email> {
       child: RoundedButton(
         title: 'Continue',
         onButtonClick: () async {
+          setData();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProfilePage(widget.user)));
+          print(widget.user.toString());
           //TODO Phone Number Page
         },
         color: _changeColor(),
       ),
     );
+  }
+
+  void setData() {
+    widget.user.email = _emailTextFieldController.text;
   }
 
   Color _changeColor() {
